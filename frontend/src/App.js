@@ -14,7 +14,7 @@ const App = () => (
     <Route path='/mynotes' Component={MyNotes}/>
     </Routes>
     </main>
-    <Footer></Footer>
+    <Footer></Footer> 
     </BrowserRouter>
   );
 

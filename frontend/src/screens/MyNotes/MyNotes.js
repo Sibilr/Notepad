@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState} from 'react'
 import MainScreen from '../../components/MainScreen.js'
 import { Button, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import notes from "../../data/notes.js"
 import Accordion from 'react-bootstrap/Accordion';
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
-
+import axios from 'axios';
 
 const MyNotes = () => {
 
-    function CustomToggle({ children, eventKey }) {
+  const [notes, setNotes] = useState([]);
+
+  const fetchNotes = async () =>{
+   const {data}= await axios.get('/notes')
+   setNotes(data);
+}
+useEffect(() => {
+    fetchNotes();
+  });
+function CustomToggle({ children, eventKey }) {
         const decoratedOnClick = useAccordionButton(eventKey, () =>
           console.log('totally custom!'),
         );
@@ -21,9 +29,7 @@ const MyNotes = () => {
         );
       }
 
-
-
-  return (
+ return (
     <>  
     <MainScreen title="Welcome back Sibi...">
     <div>
@@ -34,7 +40,7 @@ const MyNotes = () => {
 
 {
         notes.map(note => (
-            <Accordion defaultActiveKey="1">
+            <Accordion key={note._id} defaultActiveKey="1">
             <Card style={{ margin: 25 }}>
       <Card.Header style={{ display: "flex" }}>
      
